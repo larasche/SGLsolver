@@ -7,7 +7,6 @@ Created on Fri Sep 18 16:19:57 2020
 """
 
 """File Io for the sglsolver module"""
-
 import numpy as np
 
 
@@ -26,18 +25,18 @@ def read_schrodinger_inp(directory="."):
     instring = fp.readline()
     indata["mass"] = float(instring.split()[0])
     instring = fp.readline()
-    indata["xMin"] = instring.split()[0]
-    indata["xMax"] = instring.split()[1]
-    indata["nPoint"] = instring.split()[2]
+    indata["xMin"] = float(instring.split()[0])
+    indata["xMax"] = float(instring.split()[1])
+    indata["nPoint"] = float(instring.split()[2])
     instring = fp.readline()
-    indata["firstEV"] = instring.split()[0]
-    indata["lastEV"] = instring.split()[1]
+    indata["firstEV"] = int(instring.split()[0])
+    indata["lastEV"] = int(instring.split()[1])
     instring = fp.readline()
     indata["interpolationtype"] = instring.split()[0]
     instring = fp.readline()
-    indata["nr_interpolation_points"] = instring.split()[0]
+    indata["nr_interpolation_points"] = int(instring.split()[0])
     fp.close
-
+# reads the interpolation points:
     fp = open(directory+"schrodinger.int", "r")
     aa = []
     for i, line in enumerate(fp):
@@ -46,12 +45,17 @@ def read_schrodinger_inp(directory="."):
         elif i > 4:
             aa += line.split(" ")
 
-    print(aa)
+    aa = list(map(float, aa))
 
-    indata["inter_points_x"] = aa[::2]
-    indata["inter_points_y"] = aa[1::2]
+    indata["inter_points_x"] = np.array(aa[::2])
+    indata["inter_points_y"] = np.array(aa[1::2])
     print(indata)
-
-
-
     return indata
+
+
+def write_int_pot(x_range, int_potential, directory):
+    """Writes the calculated potential and the x values in a file (x, V(X))"""
+    aa = np.transpose(x_range)
+    bb = np.transpose(int_potential)
+    xrangeandpot = np.transpose(np.array([aa, bb]))
+    np.savetxt(directory+"potential.dat", xrangeandpot)
