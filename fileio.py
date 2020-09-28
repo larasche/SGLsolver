@@ -54,8 +54,41 @@ def read_schrodinger_inp(directory="."):
 
 
 def write_int_pot(x_range, int_potential, directory):
-    """Writes the calculated potential and the x values in a file (x, V(X))"""
+    """Writes the calculated potential and the x values in a file (x, V(X))
+
+    Args.:
+        x_range: xvalues
+        int_potential: discretized potential in the x range
+        directory: directory to save the file potential.dat
+    """
     aa = np.transpose(x_range)
     bb = np.transpose(int_potential)
     xrangeandpot = np.transpose(np.array([aa, bb]))
     np.savetxt(directory+"potential.dat", xrangeandpot)
+
+
+def read_int_pot(directory):
+    """Reads the x range and the potential from the file potential.dat
+
+    Args.:
+        directory: directory with the file potential.dat
+
+    Returns.:
+        xrange: x values
+        potential: V(x)
+    """
+    fp = open(directory+"potential.dat", "r")
+    aa = []
+    for i, line in enumerate(fp):
+        aa += line.split(" ")
+    aa = list(map(float, aa))
+    xrange = np.array(aa[::2])
+    potential = np.array(aa[1::2])
+    print(xrange)
+    print(potential)
+    return xrange, potential
+
+
+def write_energies(energies, directory):
+    energies = np.transpose(np.array(energies))
+    np.savetxt(directory+"energies.dat", energies)
