@@ -1,4 +1,5 @@
-"""Interpolates the potential from the indata
+"""Interpolates the potential from the indata and calculates the energies and
+normalized wavefunctions
 """
 import fileio
 import numpy as np
@@ -24,7 +25,7 @@ def interpolation_pot(indata):
                                                 kind="linear")
     elif indata["interpolationtype"] == "cspline":
         interpolation = sp.CubicSpline(x_values, y_values,
-                                                bc_type = "natural")
+                                                bc_type="natural")
     elif indata["interpolationtype"] == "polynomial":
         interpolation = np.poly1d(np.polyfit(x_values, y_values,
                                              indata["nr_interpolation_points"]
@@ -34,13 +35,13 @@ def interpolation_pot(indata):
     fileio.write_int_pot(x_range, int_potential, indata["directory"])
     return int_potential
 
-# delete the int_potential!!!!!!!!!!!!!:
-def solve_EV_problem(indata, int_potential):
+
+def solve_EV_problem(indata):
     """Solves the eigenvalue problem and returns the energies and wavefunctions.
 
     Args.:
-        indata: dictionary with
-        int_potential: discretized potential in the x range
+        indata: dictionary with the mass, the ......
+
 
     Returns.:
         energies: eigenenergies
@@ -58,7 +59,6 @@ def solve_EV_problem(indata, int_potential):
     ndiag = np.ones(len(potential) - 1) * (-1/2) * a
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(-ndiag,
                     k=-1)
-    # print(matrix)
     energies, wavefct = scipy.linalg.eigh(matrix,
                                           eigvals=(indata["firstEV"] - 1,
                                           indata["lastEV"] - 1))
@@ -66,4 +66,13 @@ def solve_EV_problem(indata, int_potential):
     print(energies)
     print(wavefct)
     fileio.write_energies(energies, directory)
+# norm the eigenfunctions
+    colons, rows = wavefct.shape
+    print(colons, rows)
+    print(xrange.shape)
+    for ii in wavefct[:0]:
+        psisquare = abs(delta * sum(abs(wavefct[:, ii])) ** 2)
+        wavefct[:, ii] = 1/np.sqrt(psisquare) * wavefct
+    fileio.write_wavefct(wavefct, xrange,  directory)
+    print(wavefct)
     return
