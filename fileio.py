@@ -84,11 +84,52 @@ def read_int_pot(directory):
     aa = list(map(float, aa))
     xrange = np.array(aa[::2])
     potential = np.array(aa[1::2])
-    print(xrange)
-    print(potential)
+#    print(xrange)
+#    print(potential)
     return xrange, potential
 
 
 def write_energies(energies, directory):
+    """Writes the energies in the file energies.dat in the directory with the
+    given potential.
+
+    Args.:
+        energies: calculated energies
+        directory: directory in which the file have to be saved
+    """
     energies = np.transpose(np.array(energies))
     np.savetxt(directory+"energies.dat", energies)
+
+
+def read_energies(directory):
+    """Reads the calculated energies from the file energies.dat from a
+    directory.
+
+    Args.:
+        directory: directory in which the file with the energies are saved
+
+    Returns:
+        energies: calculated energies
+    """
+    fp = open(directory+"energies.dat", "r")
+    energies = fp.readlines()
+    energies = list(map(float, energies))
+    return energies
+
+
+def write_wavefct(wavefct, xrange, directory):
+    """ Writes the wavefunctions and the x range in a file in the directory
+    with the given potential
+
+    Args.:
+        x_range: x range
+        wavefct: calculated wavefunction
+    """
+   # print(xrange.shape, wavefct.shape)
+    xrange = np.reshape(xrange, (len(xrange), 1))
+    xrange_wavefct = np.concatenate((xrange, wavefct), axis=1)
+    np.savetxt(directory+"wavefuncs.dat", xrange_wavefct)
+
+
+def read_wavefct(directory):
+    fp = open(directory+"wavefuncs.dat", "r")
