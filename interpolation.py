@@ -3,6 +3,7 @@
 import fileio
 import numpy as np
 import scipy.interpolate as sp
+import scipy
 
 
 def interpolation_pot(indata):
@@ -32,3 +33,37 @@ def interpolation_pot(indata):
 
     fileio.write_int_pot(x_range, int_potential, indata["directory"])
     return int_potential
+
+# delete the int_potential!!!!!!!!!!!!!:
+def solve_EV_problem(indata, int_potential):
+    """Solves the eigenvalue problem and returns the energies and wavefunctions.
+
+    Args.:
+        indata: dictionary with
+        int_potential: discretized potential in the x range
+
+    Returns.:
+        energies: eigenenergies
+        wavefunc: wavefunction
+    """
+    directory = indata["directory"]
+    xrange, potential = fileio.read_int_pot(directory)
+# distance of grid points
+    delta = (abs(indata["xMax"]) + abs(indata["xMin"]))/indata["nPoint"]
+# short
+    a = 1/(indata["mass"] * delta**2)
+
+# matrix elements:
+    matrixdiagele = potential + a
+    ndiag = np.ones(len(potential) - 1) * (-1/2) * a
+    matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(-ndiag,
+                    k=-1)
+    # print(matrix)
+    energies, wavefct = scipy.linalg.eigh(matrix,
+                                          eigvals=(indata["firstEV"] - 1,
+                                          indata["lastEV"] - 1))
+
+    print(energies)
+    print(wavefct)
+    fileio.write_energies(energies, directory)
+    return
