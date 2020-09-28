@@ -1,8 +1,12 @@
 """Routines for solving a schrödinger equation"""
-import numpy as np
-import fileio
-import interpolation
+import fileio as io
+import interpolation as inter
+import visualisation as vi
 
-aa = fileio.read_schrodinger_inp("infinit_pot/")
-pot = interpolation.interpolation_pot(aa)
-print(pot)
+
+def solver(directory="."):
+    indata = io.read_schrodinger_inp(directory)
+    inter.interpolation_pot(indata)
+    inter.solve_EV_problem(indata)
+    vi.graph(indata)
+    return
