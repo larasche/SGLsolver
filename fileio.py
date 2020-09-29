@@ -57,7 +57,7 @@ def write_int_pot(x_range, int_potential, directory):
     """Writes the calculated potential and the x values in a file (x, V(X))
 
     Args.:
-        x_range: xvalues
+        x_range: x values
         int_potential: discretized potential in the x range
         directory: directory to save the file potential.dat
     """
@@ -122,14 +122,26 @@ def write_wavefct(wavefct, xrange, directory):
     with the given potential
 
     Args.:
-        x_range: x range
+        x_range: x values
         wavefct: calculated wavefunction
     """
-   # print(xrange.shape, wavefct.shape)
     xrange = np.reshape(xrange, (len(xrange), 1))
     xrange_wavefct = np.concatenate((xrange, wavefct), axis=1)
     np.savetxt(directory+"wavefuncs.dat", xrange_wavefct)
 
 
 def read_wavefct(directory):
-    fp = open(directory+"wavefuncs.dat", "r")
+    """Reads the wavefunctions from the file wavefuncs.dat
+
+    Args.:
+        directory: directory in which the file with the wavefunctions are saved
+
+    Returns:
+        xrange: x values
+        wavefct: array with the wavefunctions
+    """
+    data = np.loadtxt(directory+"wavefuncs.dat")
+    row, colon = data.shape
+    xrange = data[:, 0]
+    wavefct = data[:, 1:colon]
+    return xrange, wavefct
