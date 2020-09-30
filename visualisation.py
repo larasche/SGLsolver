@@ -20,8 +20,8 @@ def graph(indata, ymin, ymax):
     xrange, potential = fileio.read_int_pot(indata["directory"])
     plt.plot(xrange, potential)
     energies = fileio.read_energies(indata["directory"])
-    wavefct = fileio.read_wavefct(indata["directory"])
-    plt.plot(xrange, wavefct + energies)
+    xrange, wavefct = fileio.read_wavefct(indata["directory"])
+    plt.plot(xrange, wavefct*0.5 + energies)
     plt.ylim(ymin, ymax)
     plt.xlim(indata["xMin"], indata["xMax"])
 

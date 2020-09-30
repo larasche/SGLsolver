@@ -126,7 +126,7 @@ def write_wavefct(wavefct, xrange, directory):
         wavefct: calculated wavefunction
     """
     xrange = np.reshape(xrange, (len(xrange), 1))
-    xrange_wavefct = np.concatenate((xrange, wavefct), axis=1)
+    xrange_wavefct =  np.concatenate((xrange, wavefct), axis=1)
     np.savetxt(directory+"wavefuncs.dat", xrange_wavefct)
 
 
@@ -145,4 +145,4 @@ def read_wavefct(directory):
     xrange = data[:, 0]
     wavefct = data[:, 1:colon]
     print(wavefct)
-    return wavefct
+    return xrange, wavefct

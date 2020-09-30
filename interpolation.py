@@ -57,24 +57,21 @@ def solve_EV_problem(indata):
 # matrix elements:
     matrixdiagele = potential + a
     ndiag = np.ones(len(potential) - 1) * (-1/2) * a
-    matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(-ndiag,
+    matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
                     k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
                                           eigvals=(indata["firstEV"] - 1,
                                           indata["lastEV"] - 1))
-    print(matrix)
-   # print(energies)
-    #print(wavefct)
+    print(wavefct)
     fileio.write_energies(energies, directory)
 # norm the eigenfunctions
     rows, colons = wavefct.shape
 
     for ii in range(colons):
-        psisquare = delta * sum(abs(wavefct[1:-1, ii]) ** 2)
+        psisquare = delta * np.sum(np.abs(wavefct[1:-1, ii]) ** 2)
         wavefct[:, ii] = wavefct[:, ii]/(np.sqrt(psisquare))
 
     fileio.write_wavefct(wavefct, xrange,  directory)
-    #print(wavefct)
     return
 
 
@@ -82,11 +79,24 @@ def calc_expected_value(indata):
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
 # expected value from the position operator:
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
-    print(wavefct.shape)
-    rows, colons =wavefct.shape
-    exposval = []
+   # xrange = np.reshape(xrange, (len(xrange), 1))
+    rows, colons = wavefct.shape
+
+    newxrange = np.linspace(indata["xMin"]+delta, indata["xMax"]-delta, indata["nPoint"]-2)
+    newxrange = np.reshape(newxrange, (len(newxrange), 1))
+    exposval = np.zeros(colons)
+
     for ii in range(colons):
-        exposval[ii] = delta * (sum(abs(xrange[:]) * abs(wavefct[:,ii])**2))
-
-
+        exposval[ii] = delta * (np.sum(newxrange * wavefct[:, ii]**2))
+    print(exposval)
+# expectes value from the squared position operator:
+    expvalsq = np.zeros(colons)
+    for ii in range(colons):
+        expvalsq[ii] = delta * (np.sum(newxrange ** 2 * wavefct[:, ii]**2))
+    print(expvalsq)
+# uncertainty of the location measurement
+    sigma = np.zeros(len(exposval))
+    for ii in range(len(exposval)):
+        sigma[ii] = np.sqrt(expvalsq[ii] - exposval[ii]**2)
+    print(sigma)
     return
