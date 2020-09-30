@@ -50,7 +50,7 @@ def solve_EV_problem(indata):
     directory = indata["directory"]
     xrange, potential = fileio.read_int_pot(directory)
 # distance of grid points
-    delta = (abs(indata["xMax"]) + abs(indata["xMin"]))/indata["nPoint"]
+    delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
 # short
     a = 1/(indata["mass"] * delta**2)
 
@@ -62,17 +62,31 @@ def solve_EV_problem(indata):
     energies, wavefct = scipy.linalg.eigh(matrix,
                                           eigvals=(indata["firstEV"] - 1,
                                           indata["lastEV"] - 1))
-
-    print(energies)
-    print(wavefct)
+    print(matrix)
+   # print(energies)
+    #print(wavefct)
     fileio.write_energies(energies, directory)
 # norm the eigenfunctions
-    colons, rows = wavefct.shape
-    print(colons, rows)
-    print(xrange.shape)
-    for ii in wavefct[:0]:
-        psisquare = abs(delta * sum(abs(wavefct[:, ii])) ** 2)
-        wavefct[:, ii] = 1/np.sqrt(psisquare) * wavefct
+    rows, colons = wavefct.shape
+
+    for ii in range(colons):
+        psisquare = delta * sum(abs(wavefct[1:-1, ii]) ** 2)
+        wavefct[:, ii] = wavefct[:, ii]/(np.sqrt(psisquare))
+
     fileio.write_wavefct(wavefct, xrange,  directory)
-    print(wavefct)
+    #print(wavefct)
+    return
+
+
+def calc_expected_value(indata):
+    delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
+# expected value from the position operator:
+    xrange, wavefct = fileio.read_wavefct(indata["directory"])
+    print(wavefct.shape)
+    rows, colons =wavefct.shape
+    exposval = []
+    for ii in range(colons):
+        exposval[ii] = delta * (sum(abs(xrange[:]) * abs(wavefct[:,ii])**2))
+
+
     return

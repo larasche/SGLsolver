@@ -144,4 +144,5 @@ def read_wavefct(directory):
     row, colon = data.shape
     xrange = data[:, 0]
     wavefct = data[:, 1:colon]
-    return xrange, wavefct
+    print(wavefct)
+    return wavefct
