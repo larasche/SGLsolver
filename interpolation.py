@@ -58,45 +58,57 @@ def solve_EV_problem(indata):
     matrixdiagele = potential + a
     ndiag = np.ones(len(potential) - 1) * (-1/2) * a
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
-                    k=-1)
+                     k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
                                           eigvals=(indata["firstEV"] - 1,
                                           indata["lastEV"] - 1))
-    print(wavefct)
     fileio.write_energies(energies, directory)
 # norm the eigenfunctions
-    rows, colons = wavefct.shape
+    rows, columns = wavefct.shape
 
-    for ii in range(colons):
+    for ii in range(columns):
         psisquare = delta * np.sum(np.abs(wavefct[1:-1, ii]) ** 2)
         wavefct[:, ii] = wavefct[:, ii]/(np.sqrt(psisquare))
 
+    print(wavefct)
     fileio.write_wavefct(wavefct, xrange,  directory)
     return
 
 
 def calc_expected_value(indata):
+    """Calculates the expected value of the position perator and the
+    uncertainty of the location measurement.
+
+    Args.:
+        indata: dictionary with ................
+
+    Returns.:
+
+    """
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
 # expected value from the position operator:
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
-   # xrange = np.reshape(xrange, (len(xrange), 1))
-    rows, colons = wavefct.shape
+    # xrange = np.reshape(xrange, (len(xrange), 1))
+    rows, columns = wavefct.shape
 
-    newxrange = np.linspace(indata["xMin"]+delta, indata["xMax"]-delta, indata["nPoint"]-2)
-    newxrange = np.reshape(newxrange, (len(newxrange), 1))
-    exposval = np.zeros(colons)
+    newxrange = np.linspace(indata["xMax"], indata["xMin"], indata["nPoint"])
 
-    for ii in range(colons):
+    exposval = np.zeros(columns)
+
+    # print(np.sum(xrange**2 * wavefct[:, 0]**2)*delta)
+    for ii in range(columns):
         exposval[ii] = delta * (np.sum(newxrange * wavefct[:, ii]**2))
     print(exposval)
 # expectes value from the squared position operator:
-    expvalsq = np.zeros(colons)
-    for ii in range(colons):
+    expvalsq = np.zeros(columns)
+    for ii in range(columns):
         expvalsq[ii] = delta * (np.sum(newxrange ** 2 * wavefct[:, ii]**2))
     print(expvalsq)
-# uncertainty of the location measurement
+# uncertainty of the location measurement:
     sigma = np.zeros(len(exposval))
     for ii in range(len(exposval)):
         sigma[ii] = np.sqrt(expvalsq[ii] - exposval[ii]**2)
     print(sigma)
+
+    fileio.write_expvalues(exposval, sigma, indata["directory"])
     return
