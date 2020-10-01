@@ -21,9 +21,12 @@ def graph(indata, ymin, ymax):
     plt.plot(xrange, potential)
     energies = fileio.read_energies(indata["directory"])
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
-    plt.plot(xrange, wavefct*0.5 + energies)
+    plt.plot(xrange, wavefct*0.2 + energies)
     plt.ylim(ymin, ymax)
     plt.xlim(indata["xMin"], indata["xMax"])
+    expval, sigma = fileio.read_expvalues(indata["directory"])
+    plt.plot(expval, energies, "gx")
+    plt.savefig(indata["directory"]+"graph.pdf")
 
 # horizontal line
     for ii in energies:
