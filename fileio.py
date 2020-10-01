@@ -124,6 +124,7 @@ def write_wavefct(wavefct, xrange, directory):
     Args.:
         x_range: x values
         wavefct: calculated wavefunction
+        directory: directory in which the file have to be saved
     """
     xrange = np.reshape(xrange, (len(xrange), 1))
     xrange_wavefct = np.concatenate((xrange, wavefct), axis=1)
@@ -155,6 +156,7 @@ def write_expvalues(exposval, sigma, directory):
     Args.:
         exposval: expected value of the poition operator
         sigma: uncertainty of the location measurement
+        directory: directory in which the file have to be saved
     """
     exposval = np.reshape(exposval, (len(exposval), 1))
     sigma = np.reshape(sigma, (len(sigma), 1))
@@ -162,3 +164,21 @@ def write_expvalues(exposval, sigma, directory):
     np.savetxt(directory+"expvalues.dat", exposval_sigma)
 
     return
+
+
+def read_expvalues(directory):
+    """Reads the expected value of the position operator and the uncertainty of
+    the lacation measurement from the file expvalues.
+
+    Args.:
+        directory: directory in which the file with the values are saved
+
+    Returns:
+        exposval: expected value of the poition operator
+        sigma: uncertainty of the location measurement
+    """
+    exposval_sigma = np.loadtxt(directory+"expvalues.dat")
+    exposval = exposval_sigma[:, 0]
+    sigma = exposval_sigma[:, 1]
+
+    return exposval, sigma
