@@ -1,5 +1,4 @@
 """Visualisation of the engergies, the potential and the wave functions."""
-import numpy as np
 import matplotlib.pyplot as plt
 import fileio
 
@@ -18,18 +17,40 @@ def graph(indata, ymin, ymax):
             ymax: max. value of the y-axis
         """
     xrange, potential = fileio.read_int_pot(indata["directory"])
-    plt.plot(xrange, potential)
     energies = fileio.read_energies(indata["directory"])
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
+    expval, sigma = fileio.read_expvalues(indata["directory"])
+
+    plt.subplot(121)
+    # horizontal line
+    for ii in energies:
+        plt.axhline(ii, indata["xMin"], indata["xMax"], color="lightgrey")
+
+    plt.plot(xrange, potential)
     plt.plot(xrange, wavefct*0.2 + energies)
+    plt.plot(expval, energies, "x", color="forestgreen")
+
     plt.ylim(ymin, ymax)
     plt.xlim(indata["xMin"], indata["xMax"])
-    expval, sigma = fileio.read_expvalues(indata["directory"])
-    plt.plot(expval, energies, "gx")
-    plt.savefig(indata["directory"]+"graph.pdf")
 
-# horizontal line
+    plt.title("Potential, eigenstates, ⟨x⟩")
+    plt.ylabel("Energy [Hartree]")
+    plt.xlabel("x [Bohr]")
+
+
+# plot the uncertainty:
+    plt.subplot(122)
+
+    plt.xlim(0, indata["xMax"])
+    plt.ylim(ymin, ymax)
+
     for ii in energies:
-        plt.axhline(ii, indata["xMin"], indata["xMax"])
+        plt.axhline(ii, indata["xMin"], indata["xMax"], color="lightgrey")
 
+    plt.plot(sigma, energies, "+m", markersize=10)
+
+    plt.title("σₓ")
+    plt.xlabel("[Bohr]")
+
+    plt.savefig(indata["directory"]+"graph.pdf")
     return
