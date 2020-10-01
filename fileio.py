@@ -126,7 +126,7 @@ def write_wavefct(wavefct, xrange, directory):
         wavefct: calculated wavefunction
     """
     xrange = np.reshape(xrange, (len(xrange), 1))
-    xrange_wavefct =  np.concatenate((xrange, wavefct), axis=1)
+    xrange_wavefct = np.concatenate((xrange, wavefct), axis=1)
     np.savetxt(directory+"wavefuncs.dat", xrange_wavefct)
 
 
@@ -141,8 +141,24 @@ def read_wavefct(directory):
         wavefct: array with the wavefunctions
     """
     data = np.loadtxt(directory+"wavefuncs.dat")
-    row, colon = data.shape
+    row, column = data.shape
     xrange = data[:, 0]
-    wavefct = data[:, 1:colon]
+    wavefct = data[:, 1:column]
     print(wavefct)
     return xrange, wavefct
+
+
+def write_expvalues(exposval, sigma, directory):
+    """Writes the expected value of the poition operator and the uncertainty of
+    the location measurement in the file expvalues.dat.
+
+    Args.:
+        exposval: expected value of the poition operator
+        sigma: uncertainty of the location measurement
+    """
+    exposval = np.reshape(exposval, (len(exposval), 1))
+    sigma = np.reshape(sigma, (len(sigma), 1))
+    exposval_sigma = np.concatenate((exposval, sigma), axis=1)
+    np.savetxt(directory+"expvalues.dat", exposval_sigma)
+
+    return
