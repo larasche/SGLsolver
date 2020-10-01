@@ -8,5 +8,6 @@ def solver(directory="."):
     indata = io.read_schrodinger_inp(directory)
     inter.interpolation_pot(indata)
     inter.solve_EV_problem(indata)
+    inter.calc_expected_value(indata)
     vi.graph(indata)
     return
