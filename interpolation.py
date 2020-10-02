@@ -19,7 +19,7 @@ def interpolation_pot(indata):
     """
     x_values = indata["inter_points_x"]
     y_values = indata["inter_points_y"]
-    x_range = np.linspace(indata["xMin"], indata["xMax"], indata["nPoint"])
+    x_range = np.linspace(indata["xMin"], indata["xMax"], int(indata["nPoint"]))
     if indata["interpolationtype"] == "linear":
         interpolation = sp.interp1d(x_values, y_values,
                                                 kind="linear")
@@ -30,6 +30,10 @@ def interpolation_pot(indata):
         interpolation = np.poly1d(np.polyfit(x_values, y_values,
                                              indata["nr_interpolation_points"]
                                              - 1))
+    else:
+        print("Malte ist 1 Idiot")
+        raise Exception()
+
     int_potential = interpolation(x_range)
 
     fileio.write_int_pot(x_range, int_potential, indata["directory"])
