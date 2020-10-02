@@ -10,7 +10,7 @@ Created on Fri Sep 18 16:19:57 2020
 import numpy as np
 
 
-def read_schrodinger_inp(directory="."):
+def read_schrodinger_inp(directory):
     """Read the data input file and creates a Dictionarie with the data
 
     Args.:
