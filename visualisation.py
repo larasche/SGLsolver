@@ -8,14 +8,11 @@ def graph(indata, ymin, ymax, scaling):
     """Creates a plot of wavefunctions for a potential,
         depending on different energies.
         Args:
-            energies: eigenenergies
-            potential: potentials
-            wavefct: wavefunctions
-            xrange: x values
-            xmin: min. value of the x-axis
-            xmax: max. value of the x-axis
+            indata: dictionary with the directory, the min x values and the max
+                    x values
             ymin: min. value of the y-axis
             ymax: max. value of the y-axis
+            scaling: scaling factor for the wavefunction
         """
     xrange, potential = fileio.read_int_pot(indata["directory"])
     energies = fileio.read_energies(indata["directory"])
@@ -28,7 +25,16 @@ def graph(indata, ymin, ymax, scaling):
         plt.axhline(ii, indata["xMin"], indata["xMax"], color="lightgrey")
 
     plt.plot(xrange, potential, color="black")
-    plt.plot(xrange, wavefct*scaling + energies)
+
+    rows, columns = wavefct.shape
+    for ii in range(columns):
+        if ii % 2:
+            plt.plot(xrange, wavefct[:, ii]*scaling + energies[ii],
+                     color="red")
+        else:
+            plt.plot(xrange, wavefct[:, ii]*scaling + energies[ii],
+                     color="blue")
+
     plt.plot(expval, energies, "x", color="forestgreen")
 
     plt.ylim(ymin, ymax)
