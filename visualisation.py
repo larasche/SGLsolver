@@ -1,9 +1,10 @@
 """Visualisation of the engergies, the potential and the wave functions."""
 import matplotlib.pyplot as plt
 import fileio
+import numpy as np
 
 
-def graph(indata, ymin, ymax):
+def graph(indata, ymin, ymax, scaling):
     """Creates a plot of wavefunctions for a potential,
         depending on different energies.
         Args:
@@ -20,14 +21,14 @@ def graph(indata, ymin, ymax):
     energies = fileio.read_energies(indata["directory"])
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
     expval, sigma = fileio.read_expvalues(indata["directory"])
-
+# plot the energies, wavefunctions and expected values
     plt.subplot(121)
-    # horizontal line
+
     for ii in energies:
         plt.axhline(ii, indata["xMin"], indata["xMax"], color="lightgrey")
 
-    plt.plot(xrange, potential)
-    plt.plot(xrange, wavefct*0.2 + energies)
+    plt.plot(xrange, potential, color="black")
+    plt.plot(xrange, wavefct*scaling + energies)
     plt.plot(expval, energies, "x", color="forestgreen")
 
     plt.ylim(ymin, ymax)
@@ -40,8 +41,9 @@ def graph(indata, ymin, ymax):
 
 # plot the uncertainty:
     plt.subplot(122)
-
-    plt.xlim(0, indata["xMax"])
+    xMax = np.max(sigma)
+    xmaxplot = xMax + xMax * 0.2
+    plt.xlim(0, xmaxplot)
     plt.ylim(ymin, ymax)
 
     for ii in energies:

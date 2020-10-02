@@ -86,16 +86,12 @@ def calc_expected_value(indata):
 
     """
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
-# expected value from the position operator:
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
-    # xrange = np.reshape(xrange, (len(xrange), 1))
+    newxrange = np.linspace(indata["xMax"], indata["xMin"], indata["nPoint"])
     rows, columns = wavefct.shape
 
-    newxrange = np.linspace(indata["xMax"], indata["xMin"], indata["nPoint"])
-
+# expected value from the position operator:
     exposval = np.zeros(columns)
-
-    # print(np.sum(xrange**2 * wavefct[:, 0]**2)*delta)
     for ii in range(columns):
         exposval[ii] = delta * (np.sum(newxrange * wavefct[:, ii]**2))
     print(exposval)
