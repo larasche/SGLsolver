@@ -13,38 +13,36 @@ def read_schrodinger_inp(directory):
     Returns.:
         indata: Dictionarie with the data from the input file
     """
-    fp = open(directory+"schrodinger.int", "r")
-    indata = {}
-    indata["directory"] = directory
-    instring = fp.readline()
-    indata["mass"] = float(instring.split()[0])
-    instring = fp.readline()
-    indata["xMin"] = float(instring.split()[0])
-    indata["xMax"] = float(instring.split()[1])
-    indata["nPoint"] = float(instring.split()[2])
-    instring = fp.readline()
-    indata["firstEV"] = int(instring.split()[0])
-    indata["lastEV"] = int(instring.split()[1])
-    instring = fp.readline()
-    indata["interpolationtype"] = instring.split()[0]
-    instring = fp.readline()
-    indata["nr_interpolation_points"] = int(instring.split()[0])
-    fp.close
-# reads the interpolation points:
-    fp = open(directory+"schrodinger.int", "r")
-    aa = []
-    for i, line in enumerate(fp):
-        if i <= 4:
-            continue
-        elif i > 4:
-            aa += line.split(" ")
+    with open(directory+"schrodinger.int", "r") as fp:
+        indata = {"directory": directory}
+        instring = fp.readline()
+        indata["mass"] = float(instring.split()[0])
+        instring = fp.readline()
+        indata["xMin"] = float(instring.split()[0])
+        indata["xMax"] = float(instring.split()[1])
+        indata["nPoint"] = float(instring.split()[2])
+        instring = fp.readline()
+        indata["firstEV"] = int(instring.split()[0])
+        indata["lastEV"] = int(instring.split()[1])
+        instring = fp.readline()
+        indata["interpolationtype"] = instring.split()[0]
+        instring = fp.readline()
+        indata["nr_interpolation_points"] = int(instring.split()[0])
+    # reads the interpolation points:
+    with open(directory+"schrodinger.int", "r") as fp:
+        aa = []
+        for i, line in enumerate(fp):
+            if i <= 4:
+                continue
+            elif i > 4:
+                aa += line.split(" ")
 
-    aa = list(map(float, aa))
+        aa = list(map(float, aa))
 
-    indata["inter_points_x"] = np.array(aa[::2])
-    indata["inter_points_y"] = np.array(aa[1::2])
-    print(indata)
-    return indata
+        indata["inter_points_x"] = np.array(aa[::2])
+        indata["inter_points_y"] = np.array(aa[1::2])
+        print(indata)
+        return indata
 
 
 def write_int_pot(x_range, int_potential, directory):
@@ -71,16 +69,16 @@ def read_int_pot(directory):
         xrange: x values
         potential: V(x)
     """
-    fp = open(directory+"potential.dat", "r")
-    aa = []
-    for i, line in enumerate(fp):
-        aa += line.split(" ")
-    aa = list(map(float, aa))
-    xrange = np.array(aa[::2])
-    potential = np.array(aa[1::2])
-#    print(xrange)
-#    print(potential)
-    return xrange, potential
+    with open(directory+"potential.dat", "r") as fp:
+        aa = []
+        for i, line in enumerate(fp):
+            aa += line.split(" ")
+        aa = list(map(float, aa))
+        xrange = np.array(aa[::2])
+        potential = np.array(aa[1::2])
+    #    print(xrange)
+    #    print(potential)
+        return xrange, potential
 
 
 def write_energies(energies, directory):
