@@ -1,7 +1,7 @@
 """Visualisation of the engergies, the potential and the wave functions."""
+import numpy as np
 import matplotlib.pyplot as plt
 import fileio
-import numpy as np
 
 
 def graph(indata, ymin, ymax, scaling):

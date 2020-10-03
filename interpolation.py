@@ -19,7 +19,8 @@ def interpolation_pot(indata):
     """
     x_values = indata["inter_points_x"]
     y_values = indata["inter_points_y"]
-    x_range = np.linspace(indata["xMin"], indata["xMax"], int(indata["nPoint"]))
+    x_range = np.linspace(indata["xMin"], indata["xMax"],
+                          int(indata["nPoint"]))
     if indata["interpolationtype"] == "linear":
         interpolation = sp.interp1d(x_values, y_values,
                                     kind="linear")
@@ -84,15 +85,13 @@ def calc_expected_value(indata):
     uncertainty of the location measurement.
 
     Args.:
-        indata: dictionary with ................
-
-    Returns.:
+        indata: dictionary with with the name of the directory, min and max
+                x Values and the number of x points.
 
     """
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
     newxrange = np.linspace(indata["xMax"], indata["xMin"], indata["nPoint"])
-   # rows, columns = wavefct.shape
     columns = len(wavefct[1])
 # expected value from the position operator:
     exposval = np.zeros(columns)
@@ -111,4 +110,5 @@ def calc_expected_value(indata):
     print(sigma)
 
     fileio.write_expvalues(exposval, sigma, indata["directory"])
+
     return

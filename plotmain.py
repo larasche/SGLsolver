@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """Main function to plot the energies, the potential, the wavefunction, the
 expected value from the position operator and the uncertainty."""
+import argparse
 import visualisation as vis
 import fileio as io
-import argparse
 
 
 def main():
+    """Main function to plot the data
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--directory", type=str, required=True)
     parser.add_argument("-ymin ", "--yMin", type=float, required=True)
