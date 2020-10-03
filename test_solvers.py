@@ -2,7 +2,7 @@
 """"
 Test's for pytest, to see if results match the reference data.
 
-
+Author: Malte Kehlenbeck
 """
 import warnings
 import scipy
@@ -15,7 +15,6 @@ warnings.simplefilter("always")
 
 TESTNAMES = ['infinit_pot', 'finit_pot', 'harm_oscillator', 'asym_pot',
              'double_pot_lin', 'double_pot_cub']
-
 
 @pytest.mark.parametrize("testname", TESTNAMES)
 def test_pot(testname):
@@ -46,9 +45,10 @@ def test_ev(testname):
     path = './examplefiles/' + testname + '/'
     # read ref energies
     ref_en = np.loadtxt(path + 'ref_energies.dat')
-    # calculate ev from schroedinger.inp
-    aa = fi.read_schrodinger_inp(path)
-    directory = aa["directory"]
+    # calculate ev from schroedinger.inp using placeholder as a var to store inputdata
+    placeholder = fi.read_schrodinger_inp(path)
+    # use part of interpolation.solve_ev to just calculate the energies
+    directory = placeholder["directory"]
     xrange, potential = fi.read_int_pot(directory)
     # distance of grid points
     delta = (abs(aa["xMax"] - aa["xMin"])) / aa["nPoint"]

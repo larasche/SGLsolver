@@ -1,0 +1,358 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API Documentation &#8212; SGLsolver 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="SGLSOLVER" href="README.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-solvers">
+<span id="api-documentation"></span><h1>API Documentation<a class="headerlink" href="#module-solvers" title="Permalink to this headline">¶</a></h1>
+<p>Routines for solving a schrodinger equation</p>
+<dl class="function">
+<dt id="solvers.main">
+<code class="descclassname">solvers.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#solvers.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function to solve the schrodinger equation for a given potential</p>
+</dd></dl>
+
+<span class="target" id="module-fileio"></span><p>File Io for the sglsolver module</p>
+<dl class="function">
+<dt id="fileio.read_energies">
+<code class="descclassname">fileio.</code><code class="descname">read_energies</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.read_energies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the calculated energies from the file energies.dat from a
+directory.</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>directory: directory in which the file with the energies are saved</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">calculated energies</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">energies</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.read_expvalues">
+<code class="descclassname">fileio.</code><code class="descname">read_expvalues</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.read_expvalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the expected value of the position operator and the uncertainty of
+the lacation measurement from the file expvalues.</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>directory: directory in which the file with the values are saved</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">expected value of the poition operator
+sigma: uncertainty of the location measurement</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">exposval</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.read_int_pot">
+<code class="descclassname">fileio.</code><code class="descname">read_int_pot</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.read_int_pot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the x range and the potential from the file potential.dat</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>directory: directory with the file potential.dat</dd>
+<dt>Returns.:</dt>
+<dd>xrange: x values
+potential: V(x)</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.read_schrodinger_inp">
+<code class="descclassname">fileio.</code><code class="descname">read_schrodinger_inp</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.read_schrodinger_inp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the data input file and creates a Dictionarie with the data</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>directory: The directory with the schrodinger.int file</dd>
+<dt>Returns.:</dt>
+<dd>indata: Dictionarie with the data from the input file</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.read_wavefct">
+<code class="descclassname">fileio.</code><code class="descname">read_wavefct</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.read_wavefct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the wavefunctions from the file wavefuncs.dat</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>directory: directory in which the file with the wavefunctions are saved</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">x values
+wavefct: array with the wavefunctions</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">xrange</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.write_energies">
+<code class="descclassname">fileio.</code><code class="descname">write_energies</code><span class="sig-paren">(</span><em>energies</em>, <em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.write_energies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the energies in the file energies.dat in the directory with the
+given potential.</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>energies: calculated energies
+directory: directory in which the file have to be saved</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.write_expvalues">
+<code class="descclassname">fileio.</code><code class="descname">write_expvalues</code><span class="sig-paren">(</span><em>exposval</em>, <em>sigma</em>, <em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.write_expvalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the expected value of the poition operator and the uncertainty of
+the location measurement in the file expvalues.dat.</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>exposval: expected value of the poition operator
+sigma: uncertainty of the location measurement
+directory: directory in which the file have to be saved</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.write_int_pot">
+<code class="descclassname">fileio.</code><code class="descname">write_int_pot</code><span class="sig-paren">(</span><em>x_range</em>, <em>int_potential</em>, <em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.write_int_pot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the calculated potential and the x values in a file (x, V(X))</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>x_range: x values
+int_potential: discretized potential in the x range
+directory: directory to save the file potential.dat</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fileio.write_wavefct">
+<code class="descclassname">fileio.</code><code class="descname">write_wavefct</code><span class="sig-paren">(</span><em>wavefct</em>, <em>xrange</em>, <em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#fileio.write_wavefct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the wavefunctions and the x range in a file in the directory
+with the given potential</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>x_range: x values
+wavefct: calculated wavefunction
+directory: directory in which the file have to be saved</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-interpolation"></span><p>Interpolates the potential from the indata and calculates the energies and
+normalized wavefunctions</p>
+<dl class="function">
+<dt id="interpolation.calc_expected_value">
+<code class="descclassname">interpolation.</code><code class="descname">calc_expected_value</code><span class="sig-paren">(</span><em>indata</em><span class="sig-paren">)</span><a class="headerlink" href="#interpolation.calc_expected_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the expected value of the position perator and the
+uncertainty of the location measurement.</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd><dl class="first last docutils">
+<dt>indata: dictionary with with the name of the directory, min and max</dt>
+<dd>x Values and the number of x points.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="interpolation.interpolation_pot">
+<code class="descclassname">interpolation.</code><code class="descname">interpolation_pot</code><span class="sig-paren">(</span><em>indata</em><span class="sig-paren">)</span><a class="headerlink" href="#interpolation.interpolation_pot" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function interpolates the potential linear, cubic or polynomial and
+writes the result in a file (potential.dat).</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>indata: dictionary with the interpolation points and the x range.</dd>
+<dt>Returns.:</dt>
+<dd>int_potential: discretized potential in the x range</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="interpolation.solve_evproblem">
+<code class="descclassname">interpolation.</code><code class="descname">solve_evproblem</code><span class="sig-paren">(</span><em>indata</em><span class="sig-paren">)</span><a class="headerlink" href="#interpolation.solve_evproblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves the eigenvalue problem and returns the energies and wavefunctions.</p>
+<dl class="docutils">
+<dt>Args.:</dt>
+<dd>indata: dictionary with the mass, the ……</dd>
+<dt>Returns.:</dt>
+<dd>energies: eigenenergies
+wavefunc: wavefunction</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-plotmain"></span><p>Main function to plot the energies, the potential, the wavefunction, the
+expected value from the position operator and the uncertainty.</p>
+<dl class="function">
+<dt id="plotmain.main">
+<code class="descclassname">plotmain.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#plotmain.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function to plot the data</p>
+</dd></dl>
+
+<span class="target" id="module-visualisation"></span><p>Visualisation of the engergies, the potential and the wave functions.</p>
+<dl class="function">
+<dt id="visualisation.graph">
+<code class="descclassname">visualisation.</code><code class="descname">graph</code><span class="sig-paren">(</span><em>indata</em>, <em>ymin</em>, <em>ymax</em>, <em>scaling</em><span class="sig-paren">)</span><a class="headerlink" href="#visualisation.graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a plot of wavefunctions for a potential,
+depending on different energies.
+:param indata: dictionary with the directory, the min x values and the max</p>
+<blockquote>
+<div>x values</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ymin</strong> – min. value of the y-axis</li>
+<li><strong>ymax</strong> – max. value of the y-axis</li>
+<li><strong>scaling</strong> – scaling factor for the wavefunction</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-test_solvers"></span><p>”
+Test’s for pytest, to see if results match the reference data.</p>
+<p>Author: Malte Kehlenbeck</p>
+<dl class="function">
+<dt id="test_solvers.test_ev">
+<code class="descclassname">test_solvers.</code><code class="descname">test_ev</code><span class="sig-paren">(</span><em>testname</em><span class="sig-paren">)</span><a class="headerlink" href="#test_solvers.test_ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Ugly)Function to test Eigenvalues</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>example</strong> – directory containing schroedinger.inp and ref_energies.dat</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="test_solvers.test_pot">
+<code class="descclassname">test_solvers.</code><code class="descname">test_pot</code><span class="sig-paren">(</span><em>testname</em><span class="sig-paren">)</span><a class="headerlink" href="#test_solvers.test_pot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to test potential</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>example</strong> – directory containing schroedinger.inp and</li>
+<li><strong>ref_potential.dat</strong> – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">SGLsolver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">SGLSOLVER</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#test-solvers">Test Solvers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README.html" title="previous chapter">SGLSOLVER</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Lara Aschenbeck und Malte Kehlenbeck.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
