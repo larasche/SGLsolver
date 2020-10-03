@@ -1,4 +1,4 @@
-"""Visualisation of the engergies, the potential and the wave functions."""
+"""Visualisation of the engergies, the potential and the wavefunctions."""
 import numpy as np
 import matplotlib.pyplot as plt
 import fileio
@@ -47,8 +47,8 @@ def graph(indata, ymin, ymax, scaling):
 
 # plot the uncertainty:
     plt.subplot(122)
-    xMax = np.max(sigma)
-    xmaxplot = xMax + xMax * 0.2
+    xnewmax = np.max(sigma)
+    xmaxplot = xnewmax + xnewmax * 0.2
     plt.xlim(0, xmaxplot)
     plt.ylim(ymin, ymax)
 
@@ -56,7 +56,6 @@ def graph(indata, ymin, ymax, scaling):
         plt.axhline(ii, indata["xMin"], indata["xMax"], color="lightgrey")
 
     plt.plot(sigma, energies, "+m", markersize=10)
-
     plt.title("σₓ")
     plt.xlabel("[Bohr]")
 

@@ -41,12 +41,13 @@ def read_schrodinger_inp(directory):
 
         indata["inter_points_x"] = np.array(aa[::2])
         indata["inter_points_y"] = np.array(aa[1::2])
-        print(indata)
+
         return indata
 
 
 def write_int_pot(x_range, int_potential, directory):
-    """Writes the calculated potential and the x values in a file (x, V(X))
+    """Writes the calculated potential and the x values in the file
+    potential.dat
 
     Args.:
         x_range: x values
@@ -76,8 +77,6 @@ def read_int_pot(directory):
         aa = list(map(float, aa))
         xrange = np.array(aa[::2])
         potential = np.array(aa[1::2])
-    #    print(xrange)
-    #    print(potential)
         return xrange, potential
 
 
@@ -87,18 +86,18 @@ def write_energies(energies, directory):
 
     Args.:
         energies: calculated energies
-        directory: directory in which the file have to be saved
+        directory: directory in which the file have to be stored
     """
     energies = np.transpose(np.array(energies))
     np.savetxt(directory+"energies.dat", energies)
 
 
 def read_energies(directory):
-    """Reads the calculated energies from the file energies.dat from a
+    """Reads the calculated energies from the file energies.dat from a given
     directory.
 
     Args.:
-        directory: directory in which the file with the energies are saved
+        directory: directory in which the file with the energies are stored
 
     Returns:
         energies: calculated energies
@@ -134,10 +133,9 @@ def read_wavefct(directory):
         wavefct: array with the wavefunctions
     """
     data = np.loadtxt(directory+"wavefuncs.dat")
-    row, column = data.shape
+    column = len(data[1])
     xrange = data[:, 0]
     wavefct = data[:, 1:column]
-    print(wavefct)
     return xrange, wavefct
 
 

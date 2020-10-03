@@ -53,10 +53,10 @@ def test_ev(testname):
     # distance of grid points
     delta = (abs(aa["xMax"] - aa["xMin"])) / aa["nPoint"]
     # short
-    a = 1 / (aa["mass"] * delta ** 2)
+    ax = 1 / (aa["mass"] * delta ** 2)
     # matrix elements:
-    matrixdiagele = potential + a
-    ndiag = np.ones(len(potential) - 1) * (-1 / 2) * a
+    matrixdiagele = potential + ax
+    ndiag = np.ones(len(potential) - 1) * (-1 / 2) * ax
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
                                                                     k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
@@ -64,4 +64,5 @@ def test_ev(testname):
                                                    aa["lastEV"] - 1))
     comp_en = np.transpose(np.array(energies))
     # comp_en = np.loadtxt(path + 'energies.dat')
+
     assert np.all(ref_en - comp_en < 1e-2)
