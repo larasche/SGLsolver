@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Sep 18 16:19:57 2020
-
-@author: larasche
-"""
-
 """File Io for the sglsolver module"""
 import numpy as np
 

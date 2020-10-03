@@ -1,10 +1,10 @@
 """Interpolates the potential from the indata and calculates the energies and
 normalized wavefunctions
 """
-import fileio
 import numpy as np
 import scipy.interpolate as sp
 import scipy
+import fileio
 
 
 def interpolation_pot(indata):
@@ -22,10 +22,10 @@ def interpolation_pot(indata):
     x_range = np.linspace(indata["xMin"], indata["xMax"], indata["nPoint"])
     if indata["interpolationtype"] == "linear":
         interpolation = sp.interp1d(x_values, y_values,
-                                                kind="linear")
+                                    kind="linear")
     elif indata["interpolationtype"] == "cspline":
         interpolation = sp.CubicSpline(x_values, y_values,
-                                                bc_type="natural")
+                                       bc_type="natural")
     elif indata["interpolationtype"] == "polynomial":
         interpolation = np.poly1d(np.polyfit(x_values, y_values,
                                              indata["nr_interpolation_points"]
@@ -36,7 +36,7 @@ def interpolation_pot(indata):
     return int_potential
 
 
-def solve_EV_problem(indata):
+def solve_evproblem(indata):
     """Solves the eigenvalue problem and returns the energies and wavefunctions.
 
     Args.:
@@ -52,26 +52,26 @@ def solve_EV_problem(indata):
 # distance of grid points
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
 # short
-    a = 1/(indata["mass"] * delta**2)
+    aa = 1/(indata["mass"] * delta**2)
 
 # matrix elements:
-    matrixdiagele = potential + a
-    ndiag = np.ones(len(potential) - 1) * (-1/2) * a
+    matrixdiagele = potential + aa
+    ndiag = np.ones(len(potential) - 1) * (-1/2) * aa
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
-                     k=-1)
+                                                                    k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
                                           eigvals=(indata["firstEV"] - 1,
-                                          indata["lastEV"] - 1))
+                                                   indata["lastEV"] - 1))
     fileio.write_energies(energies, directory)
 # norm the eigenfunctions
-    rows, columns = wavefct.shape
-
+#    rows, columns = wavefct.shape
+    columns = len(wavefct[1])
     for ii in range(columns):
         psisquare = delta * np.sum(np.abs(wavefct[1:-1, ii]) ** 2)
         wavefct[:, ii] = wavefct[:, ii]/(np.sqrt(psisquare))
 
     print(wavefct)
-    fileio.write_wavefct(wavefct, xrange,  directory)
+    fileio.write_wavefct(wavefct, xrange, directory)
     return
 
 
@@ -88,8 +88,8 @@ def calc_expected_value(indata):
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
     xrange, wavefct = fileio.read_wavefct(indata["directory"])
     newxrange = np.linspace(indata["xMax"], indata["xMin"], indata["nPoint"])
-    rows, columns = wavefct.shape
-
+   # rows, columns = wavefct.shape
+    columns = len(wavefct[1])
 # expected value from the position operator:
     exposval = np.zeros(columns)
     for ii in range(columns):
