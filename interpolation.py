@@ -57,11 +57,11 @@ def solve_evproblem(indata):
 # distance of grid points
     delta = (abs(indata["xMax"] - indata["xMin"]))/indata["nPoint"]
 # short
-    aa = 1/(indata["mass"] * delta**2)
+    abbreviation = 1/(indata["mass"] * delta**2)
 
 # matrix elements:
-    matrixdiagele = potential + aa
-    ndiag = np.ones(len(potential) - 1) * (-1/2) * aa
+    matrixdiagele = potential + abbreviation
+    ndiag = np.ones(len(potential) - 1) * (-1/2) * abbreviation
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
                                                                     k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
