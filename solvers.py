@@ -8,8 +8,10 @@ import interpolation as inter
 def main():
     """Main function to solve the schrodinger equation for a given potential
     """
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--directory", type=str, required=True)
+    descr = "Program to solve the schrodinger equation"
+    parser = argparse.ArgumentParser(description=descr)
+    msg = "Directory in wich the file schrodinger.inp is stored"
+    parser.add_argument("-d", "--directory", type=str, required=True, help=msg)
     args = parser.parse_args()
 
     indata = io.read_schrodinger_inp(args.directory)

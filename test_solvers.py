@@ -58,6 +58,7 @@ def test_ev(testname):
     # matrix elements:
     matrixdiagele = potential + abbreviation
     ndiag = np.ones(len(potential) - 1) * (-1 / 2) * abbreviation
+
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
                                                                     k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
@@ -65,4 +66,5 @@ def test_ev(testname):
                                                    indata_test["lastEV"] - 1))
     comp_en = np.transpose(np.array(energies))
     # comp_en = np.loadtxt(path + 'energies.dat')
+
     assert np.all(ref_en - comp_en < 1e-2)
