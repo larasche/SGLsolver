@@ -46,22 +46,24 @@ def test_ev(testname):
     # read ref energies
     ref_en = np.loadtxt(path + 'ref_energies.dat')
     # calculate ev from schroedinger.inp using placeholder as a var to store inputdata
-    placeholder = fi.read_schrodinger_inp(path)
+    indata_test = fi.read_schrodinger_inp(path)
     # use part of interpolation.solve_ev to just calculate the energies
-    directory = placeholder["directory"]
+    directory = indata_test["directory"]
     xrange, potential = fi.read_int_pot(directory)
     # distance of grid points
-    delta = (abs(aa["xMax"] - aa["xMin"])) / aa["nPoint"]
+    delta = (abs(indata_test["xMax"] - indata_test["xMin"])) / indata_test["nPoint"]
     # short
-    ax = 1 / (aa["mass"] * delta ** 2)
+    abbreviation = 1 / (indata_test["mass"] * delta ** 2)
+
     # matrix elements:
-    matrixdiagele = potential + ax
-    ndiag = np.ones(len(potential) - 1) * (-1 / 2) * ax
+    matrixdiagele = potential + abbreviation
+    ndiag = np.ones(len(potential) - 1) * (-1 / 2) * abbreviation
+
     matrix = np.diag(matrixdiagele) + np.diag(ndiag, k=1) + np.diag(ndiag,
                                                                     k=-1)
     energies, wavefct = scipy.linalg.eigh(matrix,
-                                          eigvals=(aa["firstEV"] - 1,
-                                                   aa["lastEV"] - 1))
+                                          eigvals=(indata_test["firstEV"] - 1,
+                                                   indata_test["lastEV"] - 1))
     comp_en = np.transpose(np.array(energies))
     # comp_en = np.loadtxt(path + 'energies.dat')
 
